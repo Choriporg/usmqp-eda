@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
+/* obtiene largo del numero de telefono*/
 int main(){
     FILE * archivo = fopen("users.wzp", "r");
     char * fono = malloc(30 * sizeof(char));
