@@ -36,8 +36,8 @@ void LeerArchivo( char *FileName, char * FileName2){ //Funcion encargada de leer
         char num[largoMaxNum];
         char texto[largoMaxMsg];
         
-        sscanf(contenido, "[%[^' '] %[^]] %*c%*c%[^+]  %[^:] %[^\n]]", date, hora, name, num, texto); //Extrae la información de cada mensaje filtrado
-
+        sscanf(contenido, "[%[^' '] %[^]] %*c%*c%[^+]  %[^:] %*c%[^\n]]", date, hora, name, num, texto); //Extrae la información de cada mensaje filtrado
+        //Ya extrae bien la información
         printf("\n\n Fecha: %s\n\n", date);
         printf("\n\n Hora: %s\n\n", hora);
         printf("\n\n Nombre: %s\n\n", name);
@@ -49,7 +49,7 @@ void LeerArchivo( char *FileName, char * FileName2){ //Funcion encargada de leer
     fclose(archUser);
     fclose(archMsg);
 }
-
+//NO HAY FUGA DE MEMORIA :D
 int main(){
     LeerArchivo("users.wzp", "shatira-pike-2023.wzp");
 
