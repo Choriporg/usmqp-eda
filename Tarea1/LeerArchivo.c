@@ -1,6 +1,6 @@
-#include "LeerArchivo.h"
+#include "usmqp.h"
 
-void LeerArchivo( char *FileName, char * FileName2){ //Funcion encargada de leer los archivos correspondientes
+void LeerArchivo( char *FileName, char * FileName2, contacto ** headUser, mensaje ** headChat){ //Funcion encargada de leer los archivos correspondientes
     FILE *archUser = NULL; //Archivo usuarios
     FILE *archMsg = NULL; //Archivo conversación
     archUser = fopen(FileName, "r");  // apunta al fichero y lo abre en modo lectura
@@ -29,20 +29,29 @@ void LeerArchivo( char *FileName, char * FileName2){ //Funcion encargada de leer
     rewind(archUser);
     rewind(archMsg); 
 
+    char date[11];
+    char hora[9];
+    char name[25];
+    char num[largoMaxNum];
+    char texto[largoMaxMsg];
+    int flag = 0;
+    contacto * headContact = *headUser;
+
     while(fscanf(archMsg, "%[^\n]%*c", contenido) != EOF){ //Lee el chat filtrado linea a linea
-        char date[11];
-        char hora[9];
-        char name[25];
-        char num[largoMaxNum];
-        char texto[largoMaxMsg];
-        
         sscanf(contenido, "[%[^' '] %[^]] %*c%*c%[^+]  %[^:] %*c%[^\n]]", date, hora, name, num, texto); //Extrae la información de cada mensaje filtrado
-        //Ya extrae bien la información
-        printf("\n\n Fecha: %s\n\n", date);
-        printf("\n\n Hora: %s\n\n", hora);
-        printf("\n\n Nombre: %s\n\n", name);
-        printf("\n\n Número: %s\n\n", num);
-        printf("\n\n Mensaje: %s\n\n", texto);
+        
+        if(flag == 0){ //Bandera que se utiliza para saber si ya se creó el primer contacto en la lista
+            FirstContact(headUser, num, name);
+            flag = 1;
+        }
+        
+        if(SearchContact(headContact, num) == 1){
+            AddContact(headContact, num, name);
+        
+        }
+
+
+
     }
     free(contenido);
     free(number);
@@ -50,8 +59,10 @@ void LeerArchivo( char *FileName, char * FileName2){ //Funcion encargada de leer
     fclose(archMsg);
 }
 //NO HAY FUGA DE MEMORIA :D
+/*
 int main(){
     LeerArchivo("users.wzp", "shatira-pike-2023.wzp");
 
     return 0;
 }
+*/

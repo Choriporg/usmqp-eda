@@ -2,17 +2,15 @@
 
 //Interfaz Usuario
 
-int FirstContact(contacto ** HeadUser, char * phone, char * name){ //Crea el primer contacto de la lista
+void FirstContact(contacto ** HeadUser, char * phone, char * name){ //Crea el primer contacto de la lista
     contacto * nuevo = malloc(sizeof(contacto));
     *HeadUser = nuevo;
     nuevo->telefono = phone;
     nuevo -> nombre = name;   
     nuevo -> sgte = NULL; 
-    int contactLen = 1;
-    return contactLen;
 }
 
-int AddContact(contacto * HeadUser, char * phone, char * name, int Len){ //Añade un contacto a la ista
+void AddContact(contacto * HeadUser, char * phone, char * name){ //Añade un contacto a la ista
     contacto * nuevo = malloc(sizeof(contacto));
     contacto * recorredor = HeadUser;
     while(recorredor -> sgte != NULL){
@@ -21,30 +19,30 @@ int AddContact(contacto * HeadUser, char * phone, char * name, int Len){ //Añad
     nuevo -> telefono = phone;
     nuevo -> nombre = name;
     nuevo -> sgte = NULL;
-    recorredor -> sgte = nuevo;
-    int Lengh = Len + 1;
-    return Lengh;  
-    
+    recorredor -> sgte = nuevo; 
 }
 
-contacto SearchContact(contacto * HeadUser, char * fonoBusqueda){ //Busca un contacto en la lista
+int SearchContact(contacto * HeadUser, char * fonoBusqueda){ //Busca un contacto en la lista
     contacto * recorredor = HeadUser;
 
     while (strcmp(recorredor -> telefono ,  fonoBusqueda) != 0){
         recorredor = recorredor -> sgte;
     }
-    return *recorredor;
+    if(recorredor -> sgte == NULL){
+        return 1; //Valor que retornará si no ha coincidencias en la busqueda
+    }else{
+        return 0; //Valor que retornará si hay coincidencias en la lista
+    }    
 }
 
-int DeleteContact(contacto ** HeadUser, char * nombreEliminado, int Len){ //Elimina un contacto de la lista
+void DeleteContact(contacto ** HeadUser, char * nombreEliminado){ //Elimina un contacto de la lista
     contacto * sicario = *HeadUser; //Ubicará al nodo que se va a
     contacto * testigo = *HeadUser; //Ubicará al contacto previo al que va a eliminar sicario. (Por algo es testigo)
     int lugarAsesinato = 0;
 
     if(strcmp(nombreEliminado, (*HeadUser) -> nombre) == 0){ //Caso donde el contacto que se elimina es el primero de la lista
         *HeadUser = (*HeadUser) -> sgte;
-        free(sicario);
-        return Len -1;        
+        free(sicario);  
     }
 
     while(strcmp(sicario -> nombre, nombreEliminado) != 0){ //Se ubica al contacto que se va a eliminar
@@ -59,10 +57,9 @@ int DeleteContact(contacto ** HeadUser, char * nombreEliminado, int Len){ //Elim
 
     testigo -> sgte = sicario -> sgte;
     free(sicario);
-    return Len -1;
 }
 
-int Clear(contacto ** HeadUser){ //Elimina todos los contactos
+void Clear(contacto ** HeadUser){ //Elimina todos los contactos
     contacto * asesinoSerial = *HeadUser;
     while((*HeadUser) != asesinoSerial){
         asesinoSerial = (*HeadUser) -> sgte;
@@ -70,5 +67,4 @@ int Clear(contacto ** HeadUser){ //Elimina todos los contactos
         free(asesinoSerial);
     }
     free(HeadUser);
-    return  0;
 }
