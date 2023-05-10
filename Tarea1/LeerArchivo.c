@@ -44,11 +44,12 @@ void LeerArchivo( char *FileName, char * FileName2, contacto ** headUser, mensaj
             FirstContact(headUser, num, name);
             flag = 1;
         }
-        
-        if(SearchContact(headContact, num) == 1){
+        printf("<\n\n\\\\PROBLEMA CON SEARCH\\\\\n\n");
+        if(SearchContact(headContact, num) == NULL){ //SEGMENTATION FAULT
             AddContact(headContact, num, name);
         }
     }
+    printf("\n\n\\\\SALIENDOOOOO\\\\\n\n");
     free(contenido);
     free(number);
     fclose(archUser);
