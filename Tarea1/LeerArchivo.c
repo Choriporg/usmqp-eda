@@ -47,22 +47,10 @@ void LeerArchivo( char *FileName, char * FileName2, contacto ** headUser, mensaj
         
         if(SearchContact(headContact, num) == 1){
             AddContact(headContact, num, name);
-        
         }
-
-
-
     }
     free(contenido);
     free(number);
     fclose(archUser);
     fclose(archMsg);
 }
-//NO HAY FUGA DE MEMORIA :D
-/*
-int main(){
-    LeerArchivo("users.wzp", "shatira-pike-2023.wzp");
-
-    return 0;
-}
-*/
