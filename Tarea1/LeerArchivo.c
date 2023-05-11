@@ -9,7 +9,7 @@ void LeerArchivo( char *FileName, char * FileName2, contacto ** headUser, mensaj
     int largoMaxNum = 0;
     char * number = malloc(1024 * sizeof(char));
     char * msg = malloc(1024 * sizeof(char)); 
-
+    
     while(fscanf(archMsg, "%[^\n]%*c", msg) != EOF){ //Obtener el largo del mensaje más largo
         if(strlen(msg) > largoMaxMsg){
             largoMaxMsg = strlen(msg);
@@ -35,13 +35,16 @@ void LeerArchivo( char *FileName, char * FileName2, contacto ** headUser, mensaj
     char num[largoMaxNum];
     char texto[largoMaxMsg];
     int flag = 0;
+
+
+
     contacto * headContact = *headUser;
 
     while(fscanf(archMsg, "%[^\n]%*c", contenido) != EOF){ //Lee el chat filtrado linea a linea
         sscanf(contenido, "[%[^' '] %[^]] %*c%*c%[^+]  %[^:] %*c%[^\n]]", date, hora, name, num, texto); //Extrae la información de cada mensaje filtrado
         
         if(flag == 0){ //Bandera que se utiliza para saber si ya se creó el primer contacto en la lista
-            FirstContact(headUser, num, name);
+            FirstContact(&headContact, num, name);
             flag = 1;
         }
         printf("<\n\n\\\\PROBLEMA CON SEARCH\\\\\n\n");

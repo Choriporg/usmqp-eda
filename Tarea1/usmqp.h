@@ -33,8 +33,8 @@ typedef struct WazaaaApp{
 
 void FirstContact(contacto ** HeadUser, char * phone, char * name);
 void AddContact(contacto * HeadUser, char * phone, char * name);
-void Clear(contacto ** HeadUser);
-int SearchContact(contacto * HeadUser, char * fonoBusqueda);
+void Clear(contacto * asesinoSerial);
+contacto * SearchContact(contacto * HeadUser, char * fonoBusqueda);
 void DeleteContact(contacto ** HeadUser, char * nombreEliminado);
 //Lectura del Archivo
 void LeerArchivo(char * FileName1, char * FileName2, contacto ** headUser, mensaje ** headChat);

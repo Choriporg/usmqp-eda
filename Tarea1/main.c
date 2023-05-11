@@ -6,7 +6,9 @@ int main(int argc, char **argv){ // Al llamar a main debo ingresar el archivo de
     
     contacto * headUser = NULL;
     mensaje * headChat = NULL;
+    //LeerArchivo("users.wzp", "shatira-pike-2023.wzp", &headUser, &headChat);
     LeerArchivo(argv[1], argv[2], &headUser, &headChat);
-    Clear(&headUser);
+    printf("\n\n\\\\PROBLEMA CON CLEAR MAIN\\\\\n\n");
+    Clear(headUser);
     return 0;
 }

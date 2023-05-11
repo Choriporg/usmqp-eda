@@ -22,16 +22,22 @@ void AddContact(contacto * HeadUser, char * phone, char * name){ //Añade un con
     recorredor -> sgte = nuevo; 
 }
 
-int SearchContact(contacto * HeadUser, char * fonoBusqueda){ //Busca un contacto en la lista
+contacto * SearchContact(contacto * HeadUser, char * fonoBusqueda){ //Busca un contacto en la lista
+    
+    printf("entramos a SearContact \n");
+
     contacto * recorredor = HeadUser;
+    if (HeadUser == NULL){
+        printf("Sorpresa!!! Head User es nulo \n");
+    }
 
     while (strcmp(recorredor -> telefono ,  fonoBusqueda) != 0){
         recorredor = recorredor -> sgte;
     }
     if(recorredor -> sgte == NULL){
-        return 1; //Valor que retornará si no ha coincidencias en la busqueda
+        return NULL; //Valor que retornará si no ha coincidencias en la busqueda
     }else{
-        return 0; //Valor que retornará si hay coincidencias en la lista
+        return recorredor; //Valor que retornará si hay coincidencias en la lista
     }    
 }
 
@@ -59,12 +65,9 @@ void DeleteContact(contacto ** HeadUser, char * nombreEliminado){ //Elimina un c
     free(sicario);
 }
 
-void Clear(contacto ** HeadUser){ //Elimina todos los contactos
-    contacto * asesinoSerial = *HeadUser;
-    while((*HeadUser) != asesinoSerial){
-        asesinoSerial = (*HeadUser) -> sgte;
-        (*HeadUser) -> sgte = asesinoSerial -> sgte;
+void Clear(contacto * asesinoSerial){ //Elimina todos los contactos de forma recursiva
+    if(asesinoSerial != NULL){
+        Clear(asesinoSerial -> sgte); //Esta parte de la función hará que se llame a si misma hasta que se llegue al extremo y se irá vaciando desde el último nodo hacia atrás
         free(asesinoSerial);
     }
-    free(HeadUser);
 }
