@@ -23,7 +23,6 @@ void AddContact(contacto * HeadUser, char * phone, char * name){ //Añade un con
 }
 
 contacto * SearchContact(contacto * HeadUser, char * fonoBusqueda){ //Busca un contacto en la lista
-    printf("\nEntramos a search\n"); //Entra a la lista pero SEGMENTATION FAULT
     contacto * recorredor = HeadUser;
     int flag = 0;
     while (recorredor -> sgte != NULL  && flag == 0){

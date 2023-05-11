@@ -10,6 +10,12 @@ typedef struct user{
     struct user * sgte; // puntero: siguiente
 } contacto;
 
+//Implementación Contactos
+void FirstContact(contacto ** HeadUser, char * phone, char * name);
+void AddContact(contacto * HeadUser, char * phone, char * name);
+void Clear(contacto * asesinoSerial);
+contacto * SearchContact(contacto * HeadUser, char * fonoBusqueda);
+void DeleteContact(contacto ** HeadUser, char * nombreEliminado);
 
 //Lista Conversación
 typedef struct WazaaaApp{
@@ -20,22 +26,29 @@ typedef struct WazaaaApp{
     struct WazaaaApp * sgte; // puntero: siguiente
 } mensaje;
 
-//Pila Conversación
-/*typedef struct pila{
-    mensaje -> fecha;
-    mensaje -> hora;
-    mensaje -> emisor;
-
-
-}
-*/
-//Implementación Contactos
-
-void FirstContact(contacto ** HeadUser, char * phone, char * name);
-void AddContact(contacto * HeadUser, char * phone, char * name);
-void Clear(contacto * asesinoSerial);
-contacto * SearchContact(contacto * HeadUser, char * fonoBusqueda);
-void DeleteContact(contacto ** HeadUser, char * nombreEliminado);
-//Lectura del Archivo
-void LeerArchivo(char * FileName1, char * FileName2, contacto ** headUser, mensaje ** headChat);
 //Implementación Mensajes
+typedef struct pila{
+    mensaje * filtrado;
+    /*
+    char * emisor;
+    char * fechaMsg;
+    char * horaMsg;
+    char * message;
+    */
+    struct pila * previo;
+} pilaChat;
+
+//Pila Filtrados
+typedef struct pilaF{
+    char * fono;
+    struct pilaF * previo;
+} filtrados;
+
+//Implementacion Filtrados
+void PushFiltrados(filtrados ** end, char * phone);
+void VaciarFiltrados(filtrados ** end);
+
+//Lectura del Archivo
+void LeerArchivo(char * FileName1, char * FileName2);
+int VerificarFiltrado(filtrados * end, char * nume);
+
