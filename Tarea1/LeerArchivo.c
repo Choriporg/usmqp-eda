@@ -69,5 +69,4 @@ void LeerArchivo( char *FileName, char * FileName2){ //Funcion encargada de leer
     fclose(archUser);
     fclose(archMsg);
     Clear(headContact);
-    VaciarFiltrados(&endFiltrados);
 }
