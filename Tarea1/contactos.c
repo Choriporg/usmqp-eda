@@ -23,22 +23,17 @@ void AddContact(contacto * HeadUser, char * phone, char * name){ //Añade un con
 }
 
 contacto * SearchContact(contacto * HeadUser, char * fonoBusqueda){ //Busca un contacto en la lista
-    
-    printf("entramos a SearContact \n");
-
+    printf("\nEntramos a search\n"); //Entra a la lista pero SEGMENTATION FAULT
     contacto * recorredor = HeadUser;
-    if (HeadUser == NULL){
-        printf("Sorpresa!!! Head User es nulo \n");
-    }
-
-    while (strcmp(recorredor -> telefono ,  fonoBusqueda) != 0){
-        recorredor = recorredor -> sgte;
-    }
-    if(recorredor -> sgte == NULL){
-        return NULL; //Valor que retornará si no ha coincidencias en la busqueda
-    }else{
-        return recorredor; //Valor que retornará si hay coincidencias en la lista
-    }    
+    int flag = 0;
+    while (recorredor -> sgte != NULL  && flag == 0){
+        if(strcmp(recorredor -> telefono, fonoBusqueda) != 0){
+            recorredor = recorredor -> sgte;
+        }else if(strcmp(recorredor -> telefono, fonoBusqueda) == 0){
+                flag = 1;
+        }
+    }  
+    return recorredor;  
 }
 
 void DeleteContact(contacto ** HeadUser, char * nombreEliminado){ //Elimina un contacto de la lista
