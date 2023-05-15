@@ -65,3 +65,48 @@ void Clear(contacto * asesinoSerial){ //Elimina todos los contactos de forma rec
         free(asesinoSerial);
     }
 }
+
+//INTERFAZ CHAT
+
+void FirstMessage(mensaje ** headChat, contacto * remitente, char * date, char * hour, char * msg){ // AÑade el primer mensaje
+    mensaje * nuevo = malloc(sizeof(mensaje));
+    nuevo -> fecha = date;
+    nuevo -> hora = hour;
+    nuevo -> emisor = remitente;
+    nuevo -> contenido = msg;
+    nuevo -> sgte = NULL;
+    *headChat = nuevo;
+}
+
+void AddMessage(mensaje * headUser, contacto * remitente, char * date, char * hour, char * msg){ //Añade mensajes al final de la lista
+    mensaje * nuevo = malloc(sizeof(mensaje));
+    mensaje * recorredor = headUser;
+    while(recorredor -> sgte != NULL){
+        recorredor = recorredor -> sgte;
+    }
+    nuevo -> fecha = date;
+    nuevo -> hora = hour;
+    nuevo -> emisor = remitente;
+    nuevo -> contenido = msg;
+    recorredor -> sgte = nuevo;
+    nuevo -> sgte = NULL;
+}
+
+void ClearMsg(mensaje * asesinoSerial){ // Vacía la lista de mensajes
+    if(asesinoSerial -> sgte != NULL){
+        ClearMessage(asesinoSerial -> sgte);
+        free(asesinoSerial);
+    }
+}
+
+/*
+void imprimirContactos(contacto * HeadUser){
+    contacto * recorredor;
+    printf("\n %p\n", HeadUser);
+    printf("\n<<Estoy dentro>>\n");
+    for(recorredor = HeadUser; recorredor -> sgte != NULL; recorredor = recorredor -> sgte){
+        printf("\n<<Numero: %s>>\n", recorredor -> telefono);
+        printf("\n<<Nombre: %s>>\n", recorredor-> nombre);
+    }
+    printf("\n<<Estoy saliendo>>\n");
+}*/
