@@ -1,6 +1,9 @@
 #include "usmqp.h"
 //Funciona
 void PushFiltrados(filtrados ** end, char * phone){ //Añade a la lista de numeros filtrados cada numero filtrado
+    if (*end == NULL) {
+        printf("end es nulo \n");
+    }
     filtrados * nuevo = malloc(sizeof(filtrados));
     nuevo -> fono = phone;
     nuevo -> previo = *end;
@@ -12,13 +15,18 @@ void PushFiltrados(filtrados ** end, char * phone){ //Añade a la lista de numer
 int VerificarFiltrado(filtrados * end, char * nume){ //Retorna 1 si fue filtrado, retorna 0 en caso contrario
     filtrados * recorredor = end;
     int flag = 0;
+    /*
     while(recorredor){
+        
+        printf("\n\nComparador1: [%s] \n\n ", nume);
+        printf("\n\nComparador2: [%s]\n\n", recorredor -> fono);
         if(strcmp(nume, recorredor -> fono) == 0){
             flag = 1;
-            printf("El numero se ha filtrado\n");
+            //printf("El numero se ha filtrado\n");
         }
         recorredor = recorredor -> previo;
     }
+    */
     return flag;
 
 }

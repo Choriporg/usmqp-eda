@@ -28,7 +28,6 @@ void LeerArchivo( char *FileName, char * FileName2){ //Funcion encargada de leer
     filtrados * endFiltrados = NULL;
 
     while(fscanf(archUser, "%[^\n]%*c", number) != EOF){ //Agrega a la pila cada numero filtrado
-        PushFiltrados(&endFiltrados, number);
         printf("\n\n Recien agregado: %s\n\n", endFiltrados ->fono);
     }
 
@@ -51,10 +50,11 @@ void LeerArchivo( char *FileName, char * FileName2){ //Funcion encargada de leer
 
     while(fscanf(archMsg, "%[^\n]%*c", contenido) != EOF){ //Lee el chat filtrado linea a linea
         sscanf(contenido, "[%[^' '] %[^]] %*c%*c%[^+]  %[^:] %*c%[^\n]]", date, hora, name, num, texto); //Extrae la información de cada mensaje filtrado
-        printf("\n Resultado Verificar: %d\n", VerificarFiltrado(endFiltrados, num));
         
-        if(VerificarFiltrado(endFiltrados, num) == 1){ //Verifica si el numero está dentro de la lista de filtrados.
-            
+        printf("Datos leidos: [%s] \n", num);
+        
+        printf("\n Resultado Verificar: [%s] %d\n", num, VerificarFiltrado(endFiltrados, num));
+                
     }
     free(contenido);
     free(number);
