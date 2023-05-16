@@ -92,21 +92,9 @@ void AddMessage(mensaje * headUser, contacto * remitente, char * date, char * ho
     nuevo -> sgte = NULL;
 }
 
-void ClearMsg(mensaje * asesinoSerial){ // Vacía la lista de mensajes
+void ClearMessage(mensaje * asesinoSerial){ // Vacía la lista de mensajes
     if(asesinoSerial -> sgte != NULL){
         ClearMessage(asesinoSerial -> sgte);
         free(asesinoSerial);
     }
 }
-
-/*
-void imprimirContactos(contacto * HeadUser){
-    contacto * recorredor;
-    printf("\n %p\n", HeadUser);
-    printf("\n<<Estoy dentro>>\n");
-    for(recorredor = HeadUser; recorredor -> sgte != NULL; recorredor = recorredor -> sgte){
-        printf("\n<<Numero: %s>>\n", recorredor -> telefono);
-        printf("\n<<Nombre: %s>>\n", recorredor-> nombre);
-    }
-    printf("\n<<Estoy saliendo>>\n");
-}*/

@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-
 //Lista usuarios
 typedef struct user{
     char * telefono; // String: número de teléfono del usuario
@@ -30,20 +29,23 @@ typedef struct WazaaaApp{
 //Implementación Mensajes
 void FirstMessage(mensaje ** headChat, contacto * remitente, char * date, char * hour, char * msg);
 void AddMessage(mensaje * headChat, contacto * remitente, char * date, char * hour, char * msg);
-void ClearMessage(mensaje * asesinoSerial);
+//void ClearMessage(mensaje * asesinoSerial);
 
-//Pila Filtrados
-typedef struct pilaF{
-    char * fono;
-    struct pilaF * previo;
-} filtrados;
 
-//Implementacion Filtrados
-void PushFiltrados(filtrados ** end, char * phone);
-void PopFiltrados(filtrados ** end);
-void VaciarFiltrados(filtrados ** end);
+// PilaChat
+
+typedef struct PilaC{
+    mensaje * filtrado;
+    struct PilaC * previo;
+} pilaChat;
+
+typedef struct pilaVentana{
+    mensaje * msg1;
+    int indice;
+    struct pilaVentana * previo;
+} Ventana;
 
 //Lectura del Archivo
-void LeerArchivo(char * FileName1, char * FileName2);
-// int VerificarFiltrado(filtrados * end, char * nume);
+mensaje * LeerArchivo(char * FileName1, char * FileName2);
+int VerificarFiltrado(char * fileName, char * nume, int maxSize);
 

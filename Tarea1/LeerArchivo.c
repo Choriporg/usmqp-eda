@@ -1,6 +1,6 @@
 #include "usmqp.h"
 
-void LeerArchivo( char *FileName, char * FileName2){ //Funcion encargada de leer los archivos correspondientes
+mensaje * LeerArchivo( char *FileName, char * FileName2){ //Funcion encargada de leer los archivos correspondientes
     FILE *archUser = NULL; //Archivo usuarios
     FILE *archMsg = NULL; //Archivo conversación
     archUser = fopen(FileName, "r");
@@ -21,17 +21,9 @@ void LeerArchivo( char *FileName, char * FileName2){ //Funcion encargada de leer
             largoMaxNum = strlen(number);
         }
     }
+    free(number);
 
-    number = realloc(number, largoMaxNum * sizeof(char));
     rewind(archUser);
-
-    filtrados * endFiltrados = NULL;
-
-    while(fscanf(archUser, "%[^\n]%*c", number) != EOF){ //Agrega a la pila cada numero filtrado
-        printf("\n\n Recien agregado: %s\n\n", endFiltrados ->fono);
-    }
-
-//ESTE BUCLE FUNCIONA PERFECTAMENTE
 
     char *contenido = malloc((2 * largoMaxMsg * sizeof(char))+ 1); //Reserva la cantidad de memoria que puede usar contenido
     free(msg);
@@ -46,19 +38,33 @@ void LeerArchivo( char *FileName, char * FileName2){ //Funcion encargada de leer
     int flag = 0;
 
     contacto * headContact = NULL;
+    contacto * aux = NULL;
     mensaje * headMsg = NULL;
 
     while(fscanf(archMsg, "%[^\n]%*c", contenido) != EOF){ //Lee el chat filtrado linea a linea
         sscanf(contenido, "[%[^' '] %[^]] %*c%*c%[^+]  %[^:] %*c%[^\n]]", date, hora, name, num, texto); //Extrae la información de cada mensaje filtrado
         
-        printf("Datos leidos: [%s] \n", num);
+        if(VerificarFiltrado(FileName, num, largoMaxNum) == 1){ //Caso en que el número sí se filtró.
+            if(flag == 0){ //Caso en que no se ha creado ningun contacto.
+                FirstContact(&headContact, num, name);
+                FirstMessage(&headMsg, headContact, date, hora, texto);
+                flag = 1;
+            } else{
+                if(SearchContact == NULL){ //Caso en que el contacto no ha sido agregado.
+                    AddContact(headContact, num, name);
+                } else{ //Caso en que el contacto ya se ha creado
+                    aux = SearchContact(headContact, num);
+                    AddMessage(headMsg, aux, date, hora, texto);
+                }
+            }
+        }
         
-        printf("\n Resultado Verificar: [%s] %d\n", num, VerificarFiltrado(endFiltrados, num));
                 
     }
+
     free(contenido);
-    free(number);
     fclose(archUser);
     fclose(archMsg);
     Clear(headContact);
+    return headMsg;
 }

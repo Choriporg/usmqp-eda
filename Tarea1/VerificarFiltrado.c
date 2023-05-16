@@ -13,5 +13,4 @@ int VerificarFiltrado(char * fileName, char * nume, int maxSize){ //Retorna 1 si
     fclose(arch);
     free(number);
     return flag;
-
 }
