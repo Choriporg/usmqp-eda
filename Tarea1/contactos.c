@@ -25,14 +25,19 @@ void AddContact(contacto * HeadUser, char * phone, char * name){ //Añade un con
 contacto * SearchContact(contacto * HeadUser, char * fonoBusqueda){ //Busca un contacto en la lista
     contacto * recorredor = HeadUser;
     int flag = 0;
-    while (recorredor -> sgte != NULL  && flag == 0){
+    while (recorredor && flag == 0){ // Si llega al final de la lista de contactos,  o encuentra al contacto se terminará el bucle
         if(strcmp(recorredor -> telefono, fonoBusqueda) != 0){
             recorredor = recorredor -> sgte;
-        }else if(strcmp(recorredor -> telefono, fonoBusqueda) == 0){
+        }else if(strcmp(recorredor -> telefono, fonoBusqueda) == 0){ //Encuentra al contacto
                 flag = 1;
         }
     }  
-    return recorredor;  
+
+    if(flag == 0){
+        return NULL;
+    } else{
+        return recorredor;
+    }
 }
 
 void DeleteContact(contacto ** HeadUser, char * nombreEliminado){ //Elimina un contacto de la lista
@@ -62,39 +67,6 @@ void DeleteContact(contacto ** HeadUser, char * nombreEliminado){ //Elimina un c
 void Clear(contacto * asesinoSerial){ //Elimina todos los contactos de forma recursiva
     if(asesinoSerial != NULL){
         Clear(asesinoSerial -> sgte); //Esta parte de la función hará que se llame a si misma hasta que se llegue al extremo y se irá vaciando desde el último nodo hacia atrás
-        free(asesinoSerial);
-    }
-}
-
-//INTERFAZ CHAT
-
-void FirstMessage(mensaje ** headChat, contacto * remitente, char * date, char * hour, char * msg){ // AÑade el primer mensaje
-    mensaje * nuevo = malloc(sizeof(mensaje));
-    nuevo -> fecha = date;
-    nuevo -> hora = hour;
-    nuevo -> emisor = remitente;
-    nuevo -> contenido = msg;
-    nuevo -> sgte = NULL;
-    *headChat = nuevo;
-}
-
-void AddMessage(mensaje * headUser, contacto * remitente, char * date, char * hour, char * msg){ //Añade mensajes al final de la lista
-    mensaje * nuevo = malloc(sizeof(mensaje));
-    mensaje * recorredor = headUser;
-    while(recorredor -> sgte != NULL){
-        recorredor = recorredor -> sgte;
-    }
-    nuevo -> fecha = date;
-    nuevo -> hora = hour;
-    nuevo -> emisor = remitente;
-    nuevo -> contenido = msg;
-    recorredor -> sgte = nuevo;
-    nuevo -> sgte = NULL;
-}
-
-void ClearMessage(mensaje * asesinoSerial){ // Vacía la lista de mensajes
-    if(asesinoSerial -> sgte != NULL){
-        ClearMessage(asesinoSerial -> sgte);
         free(asesinoSerial);
     }
 }
