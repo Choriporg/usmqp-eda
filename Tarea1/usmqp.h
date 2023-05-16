@@ -16,6 +16,7 @@ void AddContact(contacto * HeadUser, char * phone, char * name);
 void Clear(contacto * asesinoSerial);
 contacto * SearchContact(contacto * HeadUser, char * fonoBusqueda);
 void DeleteContact(contacto ** HeadUser, char * nombreEliminado);
+void imprimirContactos(contacto * HeadUser);
 
 //Lista Conversación
 typedef struct WazaaaApp{
@@ -27,16 +28,9 @@ typedef struct WazaaaApp{
 } mensaje;
 
 //Implementación Mensajes
-typedef struct pila{
-    mensaje * filtrado;
-    /*
-    char * emisor;
-    char * fechaMsg;
-    char * horaMsg;
-    char * message;
-    */
-    struct pila * previo;
-} pilaChat;
+void FirstMessage(mensaje ** headChat, contacto * remitente, char * date, char * hour, char * msg);
+void AddMessage(mensaje * headChat, contacto * remitente, char * date, char * hour, char * msg);
+void ClearMessage(mensaje * asesinoSerial);
 
 //Pila Filtrados
 typedef struct pilaF{
@@ -46,9 +40,10 @@ typedef struct pilaF{
 
 //Implementacion Filtrados
 void PushFiltrados(filtrados ** end, char * phone);
+void PopFiltrados(filtrados ** end);
 void VaciarFiltrados(filtrados ** end);
 
 //Lectura del Archivo
 void LeerArchivo(char * FileName1, char * FileName2);
-int VerificarFiltrado(filtrados * end, char * nume);
+// int VerificarFiltrado(filtrados * end, char * nume);
 
