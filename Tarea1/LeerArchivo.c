@@ -1,5 +1,7 @@
 #include "usmqp.h"
 
+//Se encarga de leer los archivos, y asignar la información a donde corresponda
+
 mensaje * LeerArchivo( char *FileName, char * FileName2){ //Funcion encargada de leer los archivos correspondientes
     FILE *archUser = NULL; //Archivo usuarios
     FILE *archMsg = NULL; //Archivo conversación
@@ -33,8 +35,8 @@ mensaje * LeerArchivo( char *FileName, char * FileName2){ //Funcion encargada de
     char date[11];
     char hora[9];
     char name[25];
-    char num[largoMaxNum];
-    char texto[largoMaxMsg];
+    char num[largoMaxNum + 1];
+    char texto[largoMaxMsg + 1];
     int flag = 0;
 
     contacto * headContact = NULL;
@@ -47,19 +49,16 @@ mensaje * LeerArchivo( char *FileName, char * FileName2){ //Funcion encargada de
         if(VerificarFiltrado(FileName, num, largoMaxNum) == 1){ //Caso en que el número sí se filtró.
             if(flag == 0){ //Caso en que no se ha creado ningun contacto.
                 FirstContact(&headContact, num, name);
-                FirstMessage(&headMsg, headContact, date, hora, texto);
                 flag = 1;
             } else{
                 if(SearchContact == NULL){ //Caso en que el contacto no ha sido agregado.
                     AddContact(headContact, num, name);
                 } else{ //Caso en que el contacto ya se ha creado
                     aux = SearchContact(headContact, num);
-                    AddMessage(headMsg, aux, date, hora, texto);
+                    PushChat(&headMsg, aux, date, hora, texto);
                 }
             }
-        }
-        
-                
+        }                
     }
 
     free(contenido);

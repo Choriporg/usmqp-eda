@@ -15,9 +15,8 @@ void AddContact(contacto * HeadUser, char * phone, char * name);
 void Clear(contacto * asesinoSerial);
 contacto * SearchContact(contacto * HeadUser, char * fonoBusqueda);
 void DeleteContact(contacto ** HeadUser, char * nombreEliminado);
-void imprimirContactos(contacto * HeadUser);
 
-//Lista Conversación
+//Pila Conversación
 typedef struct WazaaaApp{
     char * fecha; // String: fecha del mensaje
     char * hora; // String: hora del mensaje
@@ -27,25 +26,26 @@ typedef struct WazaaaApp{
 } mensaje;
 
 //Implementación Mensajes
-void FirstMessage(mensaje ** headChat, contacto * remitente, char * date, char * hour, char * msg);
-void AddMessage(mensaje * headChat, contacto * remitente, char * date, char * hour, char * msg);
-//void ClearMessage(mensaje * asesinoSerial);
-
-
-// PilaChat
-
-typedef struct PilaC{
-    mensaje * filtrado;
-    struct PilaC * previo;
-} pilaChat;
-
-typedef struct pilaVentana{
-    mensaje * msg1;
-    int indice;
-    struct pilaVentana * previo;
-} Ventana;
+void PushChat(mensaje ** end, contacto * remitente, char * date, char * hour, char * msg);
+void PopChat(mensaje **end);
+mensaje * PeekChat(mensaje * end);
+void VaciarPilaChat(mensaje ** asesinoSerial);
+//void ImprimirPila(mensaje * end);
 
 //Lectura del Archivo
 mensaje * LeerArchivo(char * FileName1, char * FileName2);
 int VerificarFiltrado(char * fileName, char * nume, int maxSize);
 
+//Ventana
+typedef struct ventana{
+    mensaje * chat;
+    int indice;
+    struct ventana * previo;
+    struct ventana * sgte;
+}Ventana;
+
+//Implementación Ventana
+
+int ConstruirLista(Ventana ** Head, Ventana ** End, mensaje * top);
+void AddLista(Ventana **End, mensaje * dato, int index);
+//void VaciarLista(Ventana ** Head, int MaxIndex);
