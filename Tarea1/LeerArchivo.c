@@ -23,9 +23,16 @@ mensaje * LeerArchivo( char *FileName, char * FileName2){ //Funcion encargada de
             largoMaxNum = strlen(number);
         }
     }
-    free(number);
+    
 
     rewind(archUser);
+
+    number = realloc(number, largoMaxNum + 1);
+    filtrados * Head = NULL;
+
+    while(fscanf(archUser, "%[^\n]%*c", number) != EOF){
+        PushFiltrados(Head, number);
+    }
 
     char *contenido = malloc((2 * largoMaxMsg * sizeof(char))+ 1); //Reserva la cantidad de memoria que puede usar contenido
     free(msg);
@@ -45,8 +52,8 @@ mensaje * LeerArchivo( char *FileName, char * FileName2){ //Funcion encargada de
 
     while(fscanf(archMsg, "%[^\n]%*c", contenido) != EOF){ //Lee el chat filtrado linea a linea
         sscanf(contenido, "[%[^' '] %[^]] %*c%*c%[^+]  %[^:] %*c%[^\n]]", date, hora, name, num, texto); //Extrae la información de cada mensaje filtrado
-        
-        if(VerificarFiltrado(FileName, num, largoMaxNum) == 1){ //Caso en que el número sí se filtró.
+        printf("\n\nVerificar Filtrado: %d\n\n", VerificarFiltrado(Head, num));
+        if(VerificarFiltrado(Head, num) == 1){ //Caso en que el número sí se filtró.
             if(flag == 0){ //Caso en que no se ha creado ningun contacto.
                 FirstContact(&headContact, num, name);
                 flag = 1;
@@ -60,7 +67,7 @@ mensaje * LeerArchivo( char *FileName, char * FileName2){ //Funcion encargada de
             }
         }                
     }
-
+    free(number);
     free(contenido);
     fclose(archUser);
     fclose(archMsg);

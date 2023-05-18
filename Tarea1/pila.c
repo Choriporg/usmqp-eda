@@ -2,8 +2,8 @@
 
 void PushChat(mensaje ** end, contacto * remitente, char * date, char * hour, char * msg){
     mensaje * nuevo = malloc(sizeof(mensaje));
-    nuevo -> fecha = date;   
-    nuevo -> hora = hour;
+    strcpy(nuevo -> fecha, date);   
+    strcpy(nuevo -> hora, hour);
     nuevo -> emisor = remitente;
     nuevo -> sgte = *end;
     *end = nuevo;    
@@ -25,7 +25,7 @@ void VaciarPilaChat(mensaje ** end){
     }
     PopChat(end);
 }
-/*
+
 void ImprimirPila(mensaje * end){
     mensaje * recorredor = end;
     if(recorredor -> sgte == NULL){
@@ -42,4 +42,4 @@ void ImprimirPila(mensaje * end){
         printf("\n\nMensaje: %s\n\n", recorredor -> contenido);
         recorredor = recorredor -> sgte;
     }
-}*/
+}

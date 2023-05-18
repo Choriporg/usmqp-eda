@@ -16,6 +16,20 @@ void Clear(contacto * asesinoSerial);
 contacto * SearchContact(contacto * HeadUser, char * fonoBusqueda);
 void DeleteContact(contacto ** HeadUser, char * nombreEliminado);
 
+//PILA FILTRADOS
+
+typedef struct filtrados{
+    char * num;
+    struct filtrados * previo;
+} filtrados;
+
+//Implementación Filtrados
+
+void PushFiltrados(filtrados * top, char * nume);
+void PopFiltrados(filtrados * top);
+void ClearFiltrados(filtrados * top);
+int VerificarFiltrado(filtrados * top, char * nume);
+
 //Pila Conversación
 typedef struct WazaaaApp{
     char * fecha; // String: fecha del mensaje
@@ -30,11 +44,11 @@ void PushChat(mensaje ** end, contacto * remitente, char * date, char * hour, ch
 void PopChat(mensaje **end);
 mensaje * PeekChat(mensaje * end);
 void VaciarPilaChat(mensaje ** asesinoSerial);
-//void ImprimirPila(mensaje * end);
+void ImprimirPila(mensaje * end);
 
 //Lectura del Archivo
 mensaje * LeerArchivo(char * FileName1, char * FileName2);
-int VerificarFiltrado(char * fileName, char * nume, int maxSize);
+
 
 //Ventana
 typedef struct ventana{

@@ -5,8 +5,8 @@
 void FirstContact(contacto ** HeadUser, char * phone, char * name){ //Crea el primer contacto de la lista
     contacto * nuevo = malloc(sizeof(contacto));
     *HeadUser = nuevo;
-    nuevo->telefono = phone;
-    nuevo -> nombre = name;   
+    strcpy(nuevo->telefono, phone);
+    strcpy(nuevo -> nombre, name);   
     nuevo -> sgte = NULL; 
 }
 
@@ -16,8 +16,8 @@ void AddContact(contacto * HeadUser, char * phone, char * name){ //Añade un con
     while(recorredor -> sgte != NULL){
         recorredor = recorredor -> sgte;
     }
-    nuevo -> telefono = phone;
-    nuevo -> nombre = name;
+    strcpy(nuevo -> telefono, phone);
+    strcpy(nuevo -> nombre, name);
     nuevo -> sgte = NULL;
     recorredor -> sgte = nuevo; 
 }
