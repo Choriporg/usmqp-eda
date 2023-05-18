@@ -2,9 +2,15 @@
 
 void PushChat(mensaje ** end, contacto * remitente, char * date, char * hour, char * msg){
     mensaje * nuevo = malloc(sizeof(mensaje));
+    
+    nuevo -> fecha = malloc(sizeof(date) + 1);
+    nuevo -> contenido = malloc(sizeof(msg) +1);
+    nuevo -> hora = malloc(sizeof(hour) +1);
+    nuevo -> emisor = malloc(sizeof(contacto));
     strcpy(nuevo -> fecha, date);   
     strcpy(nuevo -> hora, hour);
     nuevo -> emisor = remitente;
+    strcpy(nuevo -> contenido, msg);
     nuevo -> sgte = *end;
     *end = nuevo;    
 }

@@ -4,14 +4,19 @@
 
 void FirstContact(contacto ** HeadUser, char * phone, char * name){ //Crea el primer contacto de la lista
     contacto * nuevo = malloc(sizeof(contacto));
+    nuevo -> telefono= malloc(sizeof(phone) +1);
+    nuevo -> nombre = malloc(sizeof(name) + 1);
     *HeadUser = nuevo;
     strcpy(nuevo->telefono, phone);
     strcpy(nuevo -> nombre, name);   
     nuevo -> sgte = NULL; 
 }
 
-void AddContact(contacto * HeadUser, char * phone, char * name){ //Añade un contacto a la ista
+void AddContact(contacto * HeadUser, char * phone, char * name){ //Añade un contacto al final la ista
     contacto * nuevo = malloc(sizeof(contacto));
+    nuevo -> nombre = malloc(sizeof(name) +1);
+    nuevo -> telefono = malloc(sizeof(phone) +1);
+
     contacto * recorredor = HeadUser;
     while(recorredor -> sgte != NULL){
         recorredor = recorredor -> sgte;
@@ -22,26 +27,29 @@ void AddContact(contacto * HeadUser, char * phone, char * name){ //Añade un con
     recorredor -> sgte = nuevo; 
 }
 
-contacto * SearchContact(contacto * HeadUser, char * fonoBusqueda){ //Busca un contacto en la lista
+int VerificarExistencia(contacto * HeadUser, char * fono){
     contacto * recorredor = HeadUser;
     int flag = 0;
-    while (recorredor && flag == 0){ // Si llega al final de la lista de contactos,  o encuentra al contacto se terminará el bucle
-        if(strcmp(recorredor -> telefono, fonoBusqueda) != 0){
-            recorredor = recorredor -> sgte;
-        }else if(strcmp(recorredor -> telefono, fonoBusqueda) == 0){ //Encuentra al contacto
-                flag = 1;
+    while (recorredor != NULL && flag == 0){ // Si llega al final de la lista de contactos,  o encuentra al contacto se terminará el bucle
+        if(strcmp(recorredor -> telefono, fono) == 0){ //Encuentra al contacto
+            flag = 1;
         }
+        recorredor = recorredor -> sgte;
     }  
 
-    if(flag == 0){
-        return NULL;
-    } else{
-        return recorredor;
+    return flag;
+}
+
+contacto * SearchContact(contacto * head, char * nume){
+    contacto * recorredor = head;
+    while(strcmp(recorredor ->telefono, nume) != 0){
+        recorredor = recorredor -> sgte;
     }
+    return recorredor;
 }
 
 void DeleteContact(contacto ** HeadUser, char * nombreEliminado){ //Elimina un contacto de la lista
-    contacto * sicario = *HeadUser; //Ubicará al nodo que se va a
+    contacto * sicario = *HeadUser; //Ubicará al nodo que se va a elimnar
     contacto * testigo = *HeadUser; //Ubicará al contacto previo al que va a eliminar sicario. (Por algo es testigo)
     int lugarAsesinato = 0;
 
@@ -64,9 +72,18 @@ void DeleteContact(contacto ** HeadUser, char * nombreEliminado){ //Elimina un c
     free(sicario);
 }
 
-void Clear(contacto * asesinoSerial){ //Elimina todos los contactos de forma recursiva
-    if(asesinoSerial != NULL){
-        Clear(asesinoSerial -> sgte); //Esta parte de la función hará que se llame a si misma hasta que se llegue al extremo y se irá vaciando desde el último nodo hacia atrás
-        free(asesinoSerial);
+void Clear(contacto * Head){ //Elimina todos los contactos de forma recursiva
+    if(Head){
+        Clear(Head -> sgte);
+        free(Head);
+    }
+}
+
+void ImprimirContactos(contacto * head){
+    contacto * recorredor = head;
+    while(recorredor != NULL){
+        printf("\n\nnumero: %s\n\n", recorredor -> telefono);
+        printf("\n\nNombre: %s\n\n", recorredor -> nombre);
+        recorredor = recorredor -> sgte;
     }
 }

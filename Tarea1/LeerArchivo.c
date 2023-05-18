@@ -28,11 +28,16 @@ mensaje * LeerArchivo( char *FileName, char * FileName2){ //Funcion encargada de
     rewind(archUser);
 
     number = realloc(number, largoMaxNum + 1);
+
     filtrados * Head = NULL;
 
     while(fscanf(archUser, "%[^\n]%*c", number) != EOF){
-        PushFiltrados(Head, number);
+        PushFiltrados(&Head, number);
     }
+
+    //PeakFiltrados(Head);
+
+    //ImprimirFiltrados(Head);
 
     char *contenido = malloc((2 * largoMaxMsg * sizeof(char))+ 1); //Reserva la cantidad de memoria que puede usar contenido
     free(msg);
@@ -52,25 +57,25 @@ mensaje * LeerArchivo( char *FileName, char * FileName2){ //Funcion encargada de
 
     while(fscanf(archMsg, "%[^\n]%*c", contenido) != EOF){ //Lee el chat filtrado linea a linea
         sscanf(contenido, "[%[^' '] %[^]] %*c%*c%[^+]  %[^:] %*c%[^\n]]", date, hora, name, num, texto); //Extrae la información de cada mensaje filtrado
-        printf("\n\nVerificar Filtrado: %d\n\n", VerificarFiltrado(Head, num));
-        if(VerificarFiltrado(Head, num) == 1){ //Caso en que el número sí se filtró.
-            if(flag == 0){ //Caso en que no se ha creado ningun contacto.
-                FirstContact(&headContact, num, name);
-                flag = 1;
-            } else{
-                if(SearchContact == NULL){ //Caso en que el contacto no ha sido agregado.
-                    AddContact(headContact, num, name);
-                } else{ //Caso en que el contacto ya se ha creado
-                    aux = SearchContact(headContact, num);
-                    PushChat(&headMsg, aux, date, hora, texto);
-                }
-            }
-        }                
+        
+        if(flag == 0){//Caso en que aún no se crea el primer contacto
+            FirstContact(&headContact, num, name);
+            PushChat(&headMsg, headContact, date, hora, texto);
+            flag = 1;
+        }
+        if(VerificarExistencia(headContact, num) == 0){ //Si el contacto no se ha agregado
+            AddContact(headContact, num, name);
+            aux = SearchContact(headContact, num);
+            PushChat(&headMsg, aux, date, hora, texto);
+        }
+                        
     }
+    
+    ImprimirContactos(headContact);
+    ClearFiltrados(Head);
     free(number);
     free(contenido);
     fclose(archUser);
     fclose(archMsg);
-    Clear(headContact);
     return headMsg;
 }

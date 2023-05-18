@@ -13,8 +13,10 @@ typedef struct user{
 void FirstContact(contacto ** HeadUser, char * phone, char * name);
 void AddContact(contacto * HeadUser, char * phone, char * name);
 void Clear(contacto * asesinoSerial);
-contacto * SearchContact(contacto * HeadUser, char * fonoBusqueda);
+int VerificarExistencia(contacto * HeadUser, char * fono);
 void DeleteContact(contacto ** HeadUser, char * nombreEliminado);
+void ImprimirContactos(contacto * head);
+contacto * SearchContact(contacto * head, char * nume);
 
 //PILA FILTRADOS
 
@@ -25,10 +27,12 @@ typedef struct filtrados{
 
 //Implementación Filtrados
 
-void PushFiltrados(filtrados * top, char * nume);
-void PopFiltrados(filtrados * top);
+void PushFiltrados(filtrados ** top, char * nume);
+void PopFiltrados(filtrados ** top);
 void ClearFiltrados(filtrados * top);
 int VerificarFiltrado(filtrados * top, char * nume);
+void ImprimirFiltrados(filtrados * top);
+void PeakFiltrados(filtrados * top);
 
 //Pila Conversación
 typedef struct WazaaaApp{
@@ -41,7 +45,7 @@ typedef struct WazaaaApp{
 
 //Implementación Mensajes
 void PushChat(mensaje ** end, contacto * remitente, char * date, char * hour, char * msg);
-void PopChat(mensaje **end);
+void PopChat(mensaje ** end);
 mensaje * PeekChat(mensaje * end);
 void VaciarPilaChat(mensaje ** asesinoSerial);
 void ImprimirPila(mensaje * end);
