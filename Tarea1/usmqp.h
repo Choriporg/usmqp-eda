@@ -29,7 +29,7 @@ typedef struct filtrados{
 
 void PushFiltrados(filtrados ** top, char * nume);
 void PopFiltrados(filtrados ** top);
-void ClearFiltrados(filtrados * top);
+void ClearFiltrados(filtrados **     top);
 int VerificarFiltrado(filtrados * top, char * nume);
 void ImprimirFiltrados(filtrados * top);
 void PeakFiltrados(filtrados * top);
