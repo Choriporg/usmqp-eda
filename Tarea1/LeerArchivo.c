@@ -60,19 +60,15 @@ mensaje * LeerArchivo( char *FileName, char * FileName2){ //Funcion encargada de
         
         if(flag == 0){//Caso en que aún no se crea el primer contacto
             FirstContact(&headContact, num, name);
-            PushChat(&headMsg, headContact, date, hora, texto);
             flag = 1;
         }
-        if(VerificarExistencia(headContact, num) == 0){ //Si el contacto no se ha agregado
+        else if(VerificarExistencia(headContact, num) == 0){ //Si el contacto no se ha agregado, pero la lista contactos ya fue creada
             AddContact(headContact, num, name);
-            aux = SearchContact(headContact, num);
-            PushChat(&headMsg, aux, date, hora, texto);
         }
-                        
+        aux = SearchContact(headContact, num);
+        PushChat(&headMsg, aux, date, hora, texto);            
     }
-    
-    ImprimirContactos(headContact);
-    ClearFiltrados(Head);
+    ClearFiltrados(&Head);
     free(number);
     free(contenido);
     fclose(archUser);

@@ -21,9 +21,13 @@ void PeakFiltrados(filtrados * top){
     printf("\n\ntop: %s\n\n", top -> num);
 }
 
-void ClearFiltrados(filtrados * top){
-    while(top){
-        PopChat(top);
+void ClearFiltrados(filtrados ** top){
+    filtrados * sicario = *top;
+    filtrados * victima = NULL;
+    while(sicario){
+        victima = sicario -> previo;
+        free(sicario);
+        sicario = victima;
     }
 }
 
