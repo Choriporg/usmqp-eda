@@ -29,7 +29,7 @@ typedef struct filtrados{
 
 void PushFiltrados(filtrados ** top, char * nume);
 void PopFiltrados(filtrados ** top);
-void ClearFiltrados(filtrados **     top);
+void ClearFiltrados(filtrados ** top);
 int VerificarFiltrado(filtrados * top, char * nume);
 void ImprimirFiltrados(filtrados * top);
 void PeakFiltrados(filtrados * top);
@@ -55,6 +55,7 @@ mensaje * LeerArchivo(char * FileName1, char * FileName2);
 
 
 //Ventana
+//Lista doblemente enlazada que se utilizara para manejar que mensaje se va a imprimir
 typedef struct ventana{
     mensaje * chat;
     int indice;
@@ -66,4 +67,5 @@ typedef struct ventana{
 
 int ConstruirLista(Ventana ** Head, Ventana ** End, mensaje * top);
 void AddLista(Ventana **End, mensaje * dato, int index);
-//void VaciarLista(Ventana ** Head, int MaxIndex);
+int ImprimirVentana(Ventana * Head, Ventana * End, int index, int orden);
+int VerificarPosicion(int index, Ventana * inicio, Ventana * fin);
