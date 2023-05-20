@@ -1,100 +1,69 @@
 #include "usmqp.h"
 
-void AddLista(Ventana ** End, mensaje * dato, int index){
+Ventana * AddLista(Ventana ** End, Ventana * before, mensaje * dato){//Agrega un nuevo nodo a la lista de mensajes que se van a imprimir.
     Ventana * nuevo = malloc(sizeof(Ventana));
     nuevo -> chat = dato;
-    nuevo -> indice = index;
-    nuevo -> previo = (*End);
+    before -> sgte = nuevo;
+    nuevo -> previo = before;
     nuevo -> sgte = NULL;
     (*End) = nuevo;
+    return nuevo;
 }
 
 void Refresh(){
-    int i;
-    for(i = 0; i < 40; i++){
-        printf("\n");
-    }
+        printf("\033[2J\033[1;1H"); //Secuencia de escape  ANSI para refrescar la pantalla
 }
 
-int ConstruirLista(Ventana ** Head, Ventana ** End, mensaje * top){
+void ConstruirLista(Ventana ** Head, Ventana ** End, mensaje * top){ //Construye la lista doblemente enlazada que se utilizará para la vetaa deslizante
     //Esta lista se contruye en orden: más reciente a más viejo
     mensaje * recorredor = top;
     Ventana * actual = malloc(sizeof(Ventana));
     int index = 0;
     actual -> chat = recorredor; // Se agrega el primer elemento a la lista de ventana
-    actual -> indice = index;
     actual -> previo = NULL;
     actual -> sgte = NULL;
     *Head = actual;
     *End = actual;
-    recorredor = recorredor -> sgte;
-
-    while(recorredor -> sgte != NULL){
+    printf("\nActual: %p\n", actual);    
+    printf("Primer end: %p", *End);
+    while(recorredor){
         index ++;
-        AddLista(End, recorredor, index);
+        actual -> sgte = AddLista(End, actual, recorredor); //Agrega un nuevo nodo a la lista
+        actual = actual -> sgte;
         recorredor = recorredor -> sgte;
     }
-    return index;
 }
 
-int VerificarPosicion(int index, Ventana * inicio, Ventana * fin){
-    if(index == inicio -> indice){//Retorna -1 si se encuentra en el inicio de la conversación
+int VerificarPosicion(Ventana * posicion, Ventana * inicio, Ventana * fin){ //Funcion que verificará si se encuentra al final de la conversacion.
+    if(posicion == inicio){//Retorna -1 si se encuentra en el inicio de la conversación
         return -1;
-    } else if(index == fin -> indice){//Retorna 1 si se encuentra al final de la conversación
+    } else if(posicion == fin){//Retorna 1 si se encuentra al final de la conversación
         return 1;
     } else{//Retorna 0 si se encuentra en medio de la conversacion
         return 0;
     }
 }
 
-int ImprimirVentana(Ventana * Head, Ventana * end, int index, int orden){ //Imprime en pantalla el chat filtrado, retorna el indice del ultimo nodo impreso
+/*
+Ventana * SearchMsg(Ventana * Head, char * word){
     Ventana * recorredor = Head;
+    int encontrado = 0;
+    int contadorCoincidencias = 0;
+    while(recorredor != NULL){
+        if (strstr(recorredor -> chat -> contenido, word) != NULL){
+
+        }
+    }
+}
+*/
+Ventana * ImprimirVentana(Ventana * posicion){//Imprime en pantalla el chat filtrado, retorna el indice del ultimo nodo impreso
+    Ventana * recorredor = posicion;
     int cont;
-    printf("\n\nIndex: %d\n\n", index);
+    for(cont = 0; cont < 10 && recorredor != NULL; cont++){
+        printf("\n[%s %s] %s %s: %s\n", recorredor -> chat -> fecha, recorredor -> chat -> hora, recorredor -> chat -> emisor -> nombre,
+        recorredor -> chat -> emisor -> telefono, recorredor -> chat -> contenido);
+        recorredor = recorredor -> previo;
+    }
     
-    while((recorredor -> indice) < index){//Posiciona el puntero recorredor en el primer nodo que se desea imprimir
-        printf("\n\nDentro\n\n");
-        recorredor = recorredor -> sgte;
-    }
-    /*
-    char * fecha;
-    char * hora;
-    char * usuario;
-    char * fono;
-    char * msg;
-    */
-    if(orden == 0){ //Scroll Up
-        for(cont = 0; cont < 9; cont++){
-            //Extrae la informacion para imprimirla
-            printf("\n\nDentro scroll up\n\n");
-            /*
-            fecha = strcpy(fecha, recorredor -> chat -> fecha);
-            hora = strcpy(hora, recorredor -> chat ->hora);
-            usuario = strcpy(usuario, recorredor -> chat -> emisor ->nombre);
-            fono = strcpy(fono, recorredor -> chat -> emisor -> telefono);
-            msg = strcpy(msg, recorredor -> chat -> contenido);
-            */
-            printf("\n[%s %s] %s %s: %s\n",recorredor -> chat -> fecha, recorredor -> chat -> hora, recorredor -> chat ->emisor -> nombre, recorredor -> chat -> emisor -> telefono, recorredor -> chat ->contenido);
-            
-            //Revisa si se puede seguir avanzando en la conversación
-            if(VerificarPosicion(recorredor -> indice, Head, end) == 0){ //Caso en que no se ha impreso el ultimo mensaje
-                printf("\n\nVerificar posicion\n\n");
-                recorredor = recorredor -> sgte;
-            }else{//Caso en que el mensaje que se acaba de imprimir sea el último
-                cont = 9;
-            }
-        }
-    } else{ //Scroll Down
-        for(cont = 0; cont < 9; cont++){
-            //Extrae la informacion para imprimirla
-            printf("\n[%s %s] %s %s: %s\n",recorredor -> chat -> fecha, recorredor -> chat -> hora, recorredor -> chat ->emisor -> nombre, recorredor -> chat -> emisor -> telefono, recorredor -> chat ->contenido);     
-            //Revisa si se puede seguir avanzando en la conversación
-            if(VerificarPosicion(recorredor -> indice, Head, end) == 0){ //Caso en que no se ha impreso el ultimo mensaje
-                recorredor = recorredor -> previo;
-            }else{//Caso en que el mensaje que se acaba de imprimir sea el último
-                cont = 9;
-            }
-        }
-    }
-    return recorredor -> indice;
+    return recorredor;
 }
