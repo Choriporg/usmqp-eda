@@ -50,21 +50,35 @@ int VerificarPosicion(int index, Ventana * inicio, Ventana * fin){
 int ImprimirVentana(Ventana * Head, Ventana * end, int index, int orden){ //Imprime en pantalla el chat filtrado, retorna el indice del ultimo nodo impreso
     Ventana * recorredor = Head;
     int cont;
-    while(recorredor -> indice < index){//Posiciona el puntero recorredor en el primer nodo que se desea imprimir
-        recorredor -> sgte;
+    printf("\n\nIndex: %d\n\n", index);
+    
+    while((recorredor -> indice) < index){//Posiciona el puntero recorredor en el primer nodo que se desea imprimir
+        printf("\n\nDentro\n\n");
+        recorredor = recorredor -> sgte;
     }
+    /*
+    char * fecha;
+    char * hora;
+    char * usuario;
+    char * fono;
+    char * msg;
+    */
     if(orden == 0){ //Scroll Up
         for(cont = 0; cont < 9; cont++){
             //Extrae la informacion para imprimirla
-            char * fecha = strcpy(fecha, recorredor -> chat -> fecha);
-            char * hora = strcpy(hora, recorredor -> chat ->hora);
-            char * usuario = strcpy(usuario, recorredor -> chat -> emisor ->nombre);
-            char * fono = strcpy(fono, recorredor -> chat -> emisor -> telefono);
-            char * msg = strcpy(msg, recorredor -> chat -> contenido);
-            printf("\n[%s %s] %s %s: %s\n",fecha, hora, usuario, fono, msg);
+            printf("\n\nDentro scroll up\n\n");
+            /*
+            fecha = strcpy(fecha, recorredor -> chat -> fecha);
+            hora = strcpy(hora, recorredor -> chat ->hora);
+            usuario = strcpy(usuario, recorredor -> chat -> emisor ->nombre);
+            fono = strcpy(fono, recorredor -> chat -> emisor -> telefono);
+            msg = strcpy(msg, recorredor -> chat -> contenido);
+            */
+            printf("\n[%s %s] %s %s: %s\n",recorredor -> chat -> fecha, recorredor -> chat -> hora, recorredor -> chat ->emisor -> nombre, recorredor -> chat -> emisor -> telefono, recorredor -> chat ->contenido);
             
             //Revisa si se puede seguir avanzando en la conversación
             if(VerificarPosicion(recorredor -> indice, Head, end) == 0){ //Caso en que no se ha impreso el ultimo mensaje
+                printf("\n\nVerificar posicion\n\n");
                 recorredor = recorredor -> sgte;
             }else{//Caso en que el mensaje que se acaba de imprimir sea el último
                 cont = 9;
@@ -73,13 +87,7 @@ int ImprimirVentana(Ventana * Head, Ventana * end, int index, int orden){ //Impr
     } else{ //Scroll Down
         for(cont = 0; cont < 9; cont++){
             //Extrae la informacion para imprimirla
-            char * fecha = strcpy(fecha, recorredor -> chat -> fecha);
-            char * hora = strcpy(hora, recorredor -> chat ->hora);
-            char * usuario = strcpy(usuario, recorredor -> chat -> emisor ->nombre);
-            char *fono = strcpy(fono, recorredor -> chat -> emisor -> telefono);
-            char * msg = strcpy(msg, recorredor -> chat -> contenido);
-            printf("\n[%s %s] %s %s: %s\n",fecha, hora, usuario, fono, msg); 
-        
+            printf("\n[%s %s] %s %s: %s\n",recorredor -> chat -> fecha, recorredor -> chat -> hora, recorredor -> chat ->emisor -> nombre, recorredor -> chat -> emisor -> telefono, recorredor -> chat ->contenido);     
             //Revisa si se puede seguir avanzando en la conversación
             if(VerificarPosicion(recorredor -> indice, Head, end) == 0){ //Caso en que no se ha impreso el ultimo mensaje
                 recorredor = recorredor -> previo;
