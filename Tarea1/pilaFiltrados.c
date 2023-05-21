@@ -15,20 +15,22 @@ void PushFiltrados(filtrados ** top, char * nume){
 void PopFiltrados(filtrados ** top){
     filtrados * sicario = *top;
     *top = (*top) -> previo;
+    free(sicario -> num);
     free(sicario);
 }
 void PeakFiltrados(filtrados * top){
     printf("\n\ntop: %s\n\n", top -> num);
 }
 
-void ClearFiltrados(filtrados ** top){
-    filtrados * sicario = *top;
-    filtrados * victima = NULL;
-    while(sicario){
-        victima = sicario -> previo;
+void ClearFiltrados(filtrados ** top){ //Ñibera memoria de la pila de los contactos filtrados
+    filtrados * victima = *top;
+    while(victima){
+        filtrados * sicario = victima;
+        victima = victima -> previo;
+        free(sicario -> num);
         free(sicario);
-        sicario = victima;
     }
+    *top = NULL;
 }
 
 //Función Encargada de verificar si el numero fue filtrado.
@@ -44,13 +46,4 @@ int VerificarFiltrado(filtrados * top, char * nume){ //Retorna 1 si fue filtrado
     }
 
     return flag;
-}
-//FUNCIONA
-void ImprimirFiltrados(filtrados * top){
-    filtrados * recorredor = top;
-    while(recorredor){
-        printf("\n\nnumero: %s\n\n", recorredor -> num);
-        recorredor = recorredor -> previo;
-
-    }
 }

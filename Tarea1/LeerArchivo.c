@@ -18,7 +18,7 @@ mensaje * LeerArchivo( char *FileName, char * FileName2){ //Funcion encargada de
         }
     }   
 
-    while(fscanf(archUser, "%[^\n]%*c", number) != EOF ){
+    while(fscanf(archUser, "%[^\n]%*c", number) != EOF ){ //Obtener el largo máximo de los números
         if(strlen(number) > largoMaxNum){
             largoMaxNum = strlen(number);
         }
@@ -34,10 +34,6 @@ mensaje * LeerArchivo( char *FileName, char * FileName2){ //Funcion encargada de
     while(fscanf(archUser, "%[^\n]%*c", number) != EOF){
         PushFiltrados(&Head, number);
     }
-
-    //PeakFiltrados(Head);
-
-    //ImprimirFiltrados(Head);
 
     char *contenido = malloc((2 * largoMaxMsg * sizeof(char))+ 1); //Reserva la cantidad de memoria que puede usar contenido
     free(msg);
@@ -74,4 +70,3 @@ mensaje * LeerArchivo( char *FileName, char * FileName2){ //Funcion encargada de
     fclose(archUser);
     fclose(archMsg);
     return headMsg;
-}

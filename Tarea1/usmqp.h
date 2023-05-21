@@ -12,7 +12,7 @@ typedef struct user{
 //Implementación Contactos
 void FirstContact(contacto ** HeadUser, char * phone, char * name);
 void AddContact(contacto * HeadUser, char * phone, char * name);
-void Clear(contacto * asesinoSerial);
+void Clear(contacto ** asesinoSerial);
 int VerificarExistencia(contacto * HeadUser, char * fono);
 void DeleteContact(contacto ** HeadUser, char * nombreEliminado);
 void ImprimirContactos(contacto * head);
@@ -31,7 +31,6 @@ void PushFiltrados(filtrados ** top, char * nume);
 void PopFiltrados(filtrados ** top);
 void ClearFiltrados(filtrados ** top);
 int VerificarFiltrado(filtrados * top, char * nume);
-void ImprimirFiltrados(filtrados * top);
 void PeakFiltrados(filtrados * top);
 
 //Pila Conversación
@@ -48,7 +47,6 @@ void PushChat(mensaje ** end, contacto * remitente, char * date, char * hour, ch
 void PopChat(mensaje ** end);
 mensaje * PeekChat(mensaje * end);
 void VaciarPilaChat(mensaje ** asesinoSerial);
-void ImprimirPila(mensaje * end);
 
 //Lectura del Archivo
 mensaje * LeerArchivo(char * FileName1, char * FileName2);
@@ -56,16 +54,19 @@ mensaje * LeerArchivo(char * FileName1, char * FileName2);
 
 //Ventana
 //Lista doblemente enlazada que se utilizara para manejar que mensaje se va a imprimir
-typedef struct ventana{
+typedef struct Ventana{
     mensaje * chat;
-    int indice;
     struct ventana * previo;
     struct ventana * sgte;
 }Ventana;
 
 //Implementación Ventana
 
-int ConstruirLista(Ventana ** Head, Ventana ** End, mensaje * top);
-void AddLista(Ventana **End, mensaje * dato, int index);
-int ImprimirVentana(Ventana * Head, Ventana * End, int index, int orden);
-int VerificarPosicion(int index, Ventana * inicio, Ventana * fin);
+
+void ConstruirLista(Ventana ** Head, Ventana ** End, mensaje * top);
+Ventana *  AddLista(Ventana **End, Ventana * before, mensaje * dato);
+Ventana * SearchMsg(Ventana * Head, char * word);
+void Refresh(void);
+Ventana * ImprimirVentana(Ventana * posicion);
+int VerificarPosicion(Ventana * posicion, Ventana * inicio, Ventana * fin);
+void VaciarVentana(Ventana ** End);
