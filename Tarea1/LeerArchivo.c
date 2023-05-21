@@ -31,7 +31,7 @@ mensaje * LeerArchivo( char *FileName, char * FileName2){ //Funcion encargada de
 
     filtrados * Head = NULL;
 
-    while(fscanf(archUser, "%[^\n]%*c", number) != EOF){
+    while(fscanf(archUser, "%[^\n]%*c", number) != EOF){ //Creo una pila con todos los numeros filtrados, se utilizará más adelante para verificar que el la conversación si fue filtrada
         PushFiltrados(&Head, number);
     }
 
