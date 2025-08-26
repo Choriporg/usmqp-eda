@@ -1,25 +1,43 @@
-## Tarea 1 ELO-320: Estructura de datos y algoritmos - USMQP.
+# Tarea 1 ELO-320: Estructura de datos y algoritmos - USMQP
 
-Esta es una tarea que realicé para el ramo de Estructura de Datos y Algoritmos en la universidad.
+Este repositorio contiene la implementación en C de un visor de conversaciones para la asignatura ELO-320 de la Universidad Técnica Federico Santa María.
 
-### Explicación:
+## Estructura del repositorio
+- `Tarea1/`: código fuente del programa junto a archivos de ejemplo y un Makefile para la compilación.
 
-Debia leer una conversación ficticia desde un archivo .csv y poder crear una lista de contactos, además de guardar toda la información relacionada con los mensajes. Este programa es capaz de:
+## Dependencias
+- [GCC](https://gcc.gnu.org/) o cualquier compilador de C compatible.
+- [Make](https://www.gnu.org/software/make/).
 
-- Leer el archivo
-- Crear una lista de contactos utilizando una TDA a elección.
-- Guardar en una TDA a elección los mensajes, relacionandolos con el contacto que los envío
-- Buscar un mensaje en específico
-- Tener una ventana de diez mensajes por consola que permite ser refrezcada según la interacción del usuario.
-- Eliminar contactos
+## Compilación
+Dentro del directorio `Tarea1` ejecutar:
 
-#### Para realizar la compilación basta ejecutar el comando make.
+```bash
+make
+```
 
-#### Para ejecutar el programa, hay que ejecutar ./main.o <Nombre del archivo usuarios> <Nombre del archivo con los mensajes filtrados>
+Este comando genera el ejecutable `TAREA1`.
 
-#### _Nota:_ Para ejecutar este programa ambos archivos que se entregan al momento de ejecutar, deben tener el mismo formato que tienen los achivos adjuntos en el repositorio
+## Ejecución
+Una vez compilado, el programa se ejecuta con:
 
-### Status: COMPLETADO  
+```bash
+./TAREA1 <archivo_usuarios> <archivo_conversacion>
+```
 
-## 👾*Choriporg*
+- `<archivo_usuarios>`: archivo con la lista de contactos.
+- `<archivo_conversacion>`: archivo con los mensajes filtrados de la conversación.
 
+Los archivos de entrada deben tener el mismo formato que los ejemplos incluidos en el repositorio.
+
+## Funcionalidades principales
+El programa permite:
+- Leer archivos de usuarios y mensajes.
+- Crear una lista de contactos utilizando una TDA.
+- Guardar los mensajes asociados a cada contacto.
+- Buscar mensajes específicos.
+- Mostrar una ventana de diez mensajes por consola con desplazamiento.
+- Eliminar contactos.
+
+## Estado del proyecto
+Completado.
